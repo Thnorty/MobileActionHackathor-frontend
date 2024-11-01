@@ -2,13 +2,13 @@ import { StyleSheet, Text, View } from "react-native";
 import Modal from "../../components/Modal";
 import { TouchableOpacity } from "react-native";
 
-const ConfirmationModal = ({ modalVisible, onBackdropPress, onModalHide, toggleMedicine, done, setModalVisible }) => {
+const ConfirmationModal = ({ modalVisible, onBackdropPress, onModalHide, toggleMedicine, taken, setModalVisible }) => {
     return (
         <Modal isVisible={modalVisible} onBackdropPress={onBackdropPress} onModalHide={onModalHide}>
             <View>
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>
-                        {done ? "İlacı almadığınızı onaylıyor musunuz?" : "İlacı aldığınızı onaylıyor musunuz?"}
+                        {taken ? "İlacı almadığınızı onaylıyor musunuz?" : "İlacı aldığınızı onaylıyor musunuz?"}
                     </Text>
                     <View style={styles.modalButtons}>
                         <TouchableOpacity
