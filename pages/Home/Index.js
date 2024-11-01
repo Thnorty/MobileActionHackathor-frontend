@@ -8,8 +8,16 @@ const Index = () => {
 	const {t} = useTranslation();
 	const navigation = useNavigation();
 	const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+	const [emergencyPhone, setEmergencyPhone] = useState("");
 
 	useEffect(() => {
+		const payload = {
+			"senior_id": 1
+		};
+		backend.post("/api/emergency_phone/", payload)
+		.then((response) => {
+			setEmergencyPhone(response.data.phone);
+		});
 		const timer = setInterval(() => {
 			setCurrentTime(new Date().toLocaleTimeString());
 		}, 1000);
@@ -17,7 +25,7 @@ const Index = () => {
 	}, []);
 
 	const handleEmergencyCall = () => {
-		Linking.openURL("tel:+905422311304")
+		Linking.openURL("tel:" + emergencyPhone);
 	}
 
 	return (
