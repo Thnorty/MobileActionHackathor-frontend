@@ -2,10 +2,19 @@ import {Text, View, TouchableOpacity, StyleSheet, Linking} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useTranslation} from "react-i18next";
+import {useState, useEffect} from "react";
 
 const Index = () => {
 	const {t} = useTranslation();
 	const navigation = useNavigation();
+	const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setCurrentTime(new Date().toLocaleTimeString());
+		}, 1000);
+		return () => clearInterval(timer);
+	}, []);
 
 	const handleEmergencyCall = () => {
 		Linking.openURL("tel:+905422311304")
@@ -13,6 +22,8 @@ const Index = () => {
 
 	return (
 		<View style={styles.container}>
+			<Text style={styles.timeText}>{currentTime}</Text>
+			
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#06bae3"}]} onPress={() => navigation.navigate("Medicines")}>
 				<Icon name="medkit" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Medicines")}</Text>
@@ -50,6 +61,13 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontSize: 18,
 		marginTop: 10,
+	},
+	timeText: {
+		fontSize: 40,
+		color: "black",	
+		marginBottom:30,
+		fontFamily:"monospace",
+
 	},
 });
 
