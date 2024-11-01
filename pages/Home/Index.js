@@ -1,9 +1,10 @@
-import {Text, View, TouchableOpacity, StyleSheet, Linking} from "react-native";
+import {Text, TouchableOpacity, StyleSheet, Linking} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useTranslation} from "react-i18next";
 import {useState, useEffect} from "react";
 import backend from "../../utils/Backend";
+import { ScrollView } from "react-native";
 
 const Index = () => {
 	const {t} = useTranslation();
@@ -39,7 +40,10 @@ const Index = () => {
 	}
 
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
+			<TouchableOpacity style={[styles.settingsButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Settings")}>
+				<Icon name="cog" size={24} color="white" />
+			</TouchableOpacity>
 			<Text style={styles.timeText}>{currentTime}</Text>
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#06bae3"}]} onPress={() => navigation.navigate("Medicines")}>
 				<Icon name="medkit" size={30} color="white" />
@@ -57,27 +61,22 @@ const Index = () => {
 				<Icon name="phone" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Emergency")}</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={[styles.button, {backgroundColor: "#f4a460"}]} onPress={() => navigation.navigate("Settings")}>
-				<Icon name="cog" size={30} color="white" />
-				<Text style={styles.buttonText}>{t("Settings")}</Text>
-			</TouchableOpacity>
-		</View>
+		</ScrollView>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		flexDirection: "column",
-		paddingHorizontal: 20,
 	},
+    contentContainer: {
+		flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 	button: {
-		padding: 20,
 		margin: 10,
 		borderRadius: 10,
-		width: "100%",
 		height: 100,
 		justifyContent: "center",
 		alignItems: "center",
@@ -88,12 +87,23 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	timeText: {
+		textAlign: "center",
 		fontSize: 40,
-		color: "black",	
-		marginBottom:30,
+		marginVertical: 30,
 		fontFamily:"monospace",
-
 	},
+    settingsButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        width: 45,
+        height: 45,
+        borderRadius: 23,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 3,
+        zIndex: 1,
+    },
 });
 
 export default Index;
