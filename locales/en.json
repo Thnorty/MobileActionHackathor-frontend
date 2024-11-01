@@ -1,5 +1,7 @@
 {
   "Medicines": "Medicines",
   "Appointments": "Appointments",
-  "Emergency": "Emergency"
+  "ConsultDoctor": "Consult My Doctor",
+  "Emergency": "Emergency",
+  "Settings": "Settings"
 }

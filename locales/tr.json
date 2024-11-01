@@ -1,5 +1,7 @@
 {
   "Medicines": "İlaçlar",
   "Appointments": "Randevular",
-  "Emergency": "Emergency"
+  "ConsultDoctor": "Doktoruma Danış",
+  "Emergency": "Acil Durum",
+  "Settings": "Ayarlar"
 }

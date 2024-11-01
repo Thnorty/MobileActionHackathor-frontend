@@ -57,6 +57,10 @@ const Index = () => {
 				<Icon name="phone" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Emergency")}</Text>
 			</TouchableOpacity>
+			<TouchableOpacity style={[styles.button, {backgroundColor: "#f4a460"}]} onPress={() => navigation.navigate("Settings")}>
+				<Icon name="cog" size={30} color="white" />
+				<Text style={styles.buttonText}>{t("Settings")}</Text>
+			</TouchableOpacity>
 		</View>
 	);
 };
