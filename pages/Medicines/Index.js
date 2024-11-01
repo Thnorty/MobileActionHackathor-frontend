@@ -4,28 +4,17 @@ import ConfirmationModal from "./ConfirmationModal";
 import backend from "../../utils/Backend";
 
 const Index = () => {
-	const [medicines, setMedicines] = useState([
-		{
-			name: "Ağrı Kesici", description: "Parol", time: "10:00", taken: true, dosage: "2 tablet",
-		},
-		{
-			name: "Tansiyon hapı", description: "Pradaxa", time: "12:00", taken: false, dosage: "1 tablet",
-		},
-		{
-			name: "Kan sulandırıcı", description: "Kaptoril", time: "14:00", taken: false, dosage: "1 tablet",
-		}
-	]);
+	const [medicines, setMedicines] = useState([]);
 
     useEffect(() => {
         const payload = {
             "senior_id": 1
-        }
+        };
         backend.post("/medicines/today/", payload)
         .then((response) => {
-          setMedicines(response.data)
+            setMedicines(response.data.medicines);
         })
     }, []);
-    
 
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
@@ -41,6 +30,11 @@ const Index = () => {
                 i === selectedIndex ? {...medicine, taken: !medicine.taken} : medicine
             ));
             setModalVisible(false);
+            const payload = {
+                "medicine_id": medicines[selectedIndex].id,
+                "taken": !medicines[selectedIndex].taken
+            };
+            backend.post("/medicines/toggle/", payload);
         }
     };
 
