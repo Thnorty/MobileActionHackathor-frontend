@@ -6,6 +6,7 @@ import {useState, useEffect, useRef} from "react";
 import backend from "../../utils/Backend";
 import FreeFallDetector from "../../utils/FreeFallDetector";
 import { useUser } from "../../utils/UserContext";
+import * as Location from 'expo-location';
 
 const Index = () => {
 	const {t} = useTranslation();
@@ -65,12 +66,18 @@ const Index = () => {
 
 	useEffect(() => {
 		const detector = new FreeFallDetector();
-		detector.setFreeFallDetectedCallback(() => {
+		detector.setFreeFallDetectedCallback(async () => {
 			if (firstFallTriggerRef.current) {
 				firstFallTriggerRef.current = false;
 				return;
 			}
 			// alert('The phone is falling!');
+			const location = await Location.getCurrentPositionAsync({});
+			backend.post("/api/senior_fall_detection/", {
+				senior_id: 1,
+				location_lat: location.coords.latitude,
+				location_lon: location.coords.longitude
+			});
 			Linking.openURL("tel:" + emergencyPhoneRef.current);
 		});
 		detector.start();
@@ -116,6 +123,10 @@ const Index = () => {
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#f0ad4e"}]} onPress={() => navigation.navigate("Chat")}>
 				<Icon name="file-text" size={30} color="white" />
 				<Text style={styles.buttonText}>{userRole === "caregiver" ? t("statusReport") : t("Chat")}</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={[styles.button, {backgroundColor: "#f542da"}]} onPress={() => navigation.navigate("LocationTracking")}>
+				<Icon name="map-marker" size={30} color="white" />
+				<Text style={styles.buttonText}>{t("LocationTracking")}</Text>
 			</TouchableOpacity>
 		</ScrollView>
 	);

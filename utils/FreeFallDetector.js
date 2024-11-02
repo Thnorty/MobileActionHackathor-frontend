@@ -8,7 +8,7 @@ export default class FreeFallDetector {
             z: 0,
         };
         this.acceleration = 0;
-        this.accelerationThreshold = 4.5;
+        this.accelerationThreshold = 4.0;
         this.freeFallDetected = false;
         this.freeFallDetectedCallback = () => {};
     }
