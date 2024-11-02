@@ -17,7 +17,8 @@ export default function App() {
     <SafeAreaView style={{flex: 1}}>
       <I18nextProvider i18n={i18n}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={"Home"} screenOptions={{ tabBarStyle: {display: "none"}}}>
+        <Stack.Navigator initialRouteName={"IntroPage"} screenOptions={{ tabBarStyle: {display: "none"}}}>
+          <Stack.Screen name={"IntroPage"} component={IntroIndex} options={{headerShown: false}} />
             <Stack.Screen name={"Home"} component={HomeIndex} options={{headerShown: false, title: t("Home")}} />
             <Stack.Screen name={"Medicines"} component={MedicinesIndex} options={{title: t("Medicines")}} />
             <Stack.Screen name={"Appointments"} component={AppointmentsIndex} options={{title: t("Appointments")}} />
@@ -25,14 +26,6 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </I18nextProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={"IntroPage"} screenOptions={{ tabBarStyle: {display: "none"}}}>
-          <Stack.Screen name={"IntroPage"} component={IntroIndex} options={{headerShown: false}} />
-          <Stack.Screen name={"Home"} component={HomeIndex} options={{headerShown: false}} />
-          <Stack.Screen name={"Medicines"} component={MedicinesIndex} />
-          <Stack.Screen name={"Appointments"} component={AppointmentsIndex} />
-        </Stack.Navigator>
-      </NavigationContainer>
     </SafeAreaView>
   );
 }
