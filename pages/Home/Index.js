@@ -1,29 +1,68 @@
-import {Text, View, TouchableOpacity, StyleSheet, Linking} from "react-native";
+import {Text, TouchableOpacity, StyleSheet, Linking} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useTranslation} from "react-i18next";
 import {useState, useEffect} from "react";
+import backend from "../../utils/Backend";
+import { ScrollView } from "react-native";
 
 const Index = () => {
 	const {t} = useTranslation();
 	const navigation = useNavigation();
-	const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+	const [currentTime, setCurrentTime] = useState(
+		new Date()
+			.toLocaleTimeString('en-US', {
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: false
+			}
+		)
+	);
+	const [doctorPhone, setDoctorPhone] = useState("");
+	const [emergencyPhone, setEmergencyPhone] = useState("");
 
 	useEffect(() => {
+		const payload = {
+			"senior_id": 1
+		};
+		backend.post("/api/emergency_phone/", payload)
+		.then((response) => {
+			setEmergencyPhone(response.data.phone);
+		});
+		backend.post("/api/doctor_phone/", payload)
+		.then((response) => {
+			setDoctorPhone(response.data.phone);
+		});
 		const timer = setInterval(() => {
-			setCurrentTime(new Date().toLocaleTimeString());
+			setCurrentTime(
+				new Date()
+					.toLocaleTimeString('en-US', {
+						hour: '2-digit',
+						minute: '2-digit',
+						second: '2-digit',
+						hour12: false
+					}
+				)
+			);
 		}, 1000);
 		return () => clearInterval(timer);
 	}, []);
 
+	const handleCallDoctor = () => {
+		Linking.openURL("tel:" + doctorPhone);
+	}
+
 	const handleEmergencyCall = () => {
-		Linking.openURL("tel:+905422311304")
+		Linking.openURL("tel:" + emergencyPhone);
 	}
 
 	return (
-		<View style={styles.container}>
+		<ScrollView style={styles.container}>
+			<TouchableOpacity style={[styles.settingsButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Settings")}>
+				<Icon name="cog" size={24} color="white" />
+			</TouchableOpacity>
 			<Text style={styles.timeText}>{currentTime}</Text>
-			
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#06bae3"}]} onPress={() => navigation.navigate("Medicines")}>
 				<Icon name="medkit" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Medicines")}</Text>
@@ -32,42 +71,59 @@ const Index = () => {
 				<Icon name="calendar" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Appointments")}</Text>
 			</TouchableOpacity>
+			<TouchableOpacity style={[styles.button, {backgroundColor: "#a134eb"}]} onPress={handleCallDoctor}>
+				<Icon name="phone" size={30} color="white" />
+				<Text style={styles.buttonText}>{t("ConsultDoctor")}</Text>
+			</TouchableOpacity>
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#e30606"}]} onPress={handleEmergencyCall}>
 				<Icon name="phone" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Emergency")}</Text>
 			</TouchableOpacity>
-		</View>
+		</ScrollView>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		flexDirection: "column",
-		paddingHorizontal: 20,
 	},
+    contentContainer: {
+		flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 	button: {
-		padding: 20,
-		margin: 10,
+		margin: 16,
 		borderRadius: 10,
-		width: "100%",
-		height: 100,
+		height: 150,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	buttonText: {
 		color: "white",
-		fontSize: 18,
+		fontSize: 26,
 		marginTop: 10,
 	},
 	timeText: {
+		textAlign: "center",
+		fontSize: 40,
+		marginVertical: 30,
 		fontSize: 50,
 		color: "black",	
 		marginBottom:30,
 		fontFamily:"monospace",
-		opacity:0.7,
+	},
+    settingsButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        width: 45,
+        height: 45,
+        borderRadius: 23,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 3,
+        zIndex: 1,
 	},
 });
 

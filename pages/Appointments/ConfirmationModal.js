@@ -3,19 +3,19 @@ import Modal from "../../components/Modal";
 import { TouchableOpacity } from "react-native";
 import { useTranslation } from "react-i18next";
 
-const ConfirmationModal = ({ modalVisible, onBackdropPress, onModalHide, toggleMedicine, taken, setModalVisible }) => {
+const ConfirmationModal = ({ modalVisible, onBackdropPress, toggleAppointment, attended, setModalVisible }) => {
     const {t} = useTranslation();
 
     return (
-        <Modal isVisible={modalVisible} onBackdropPress={onBackdropPress} onModalHide={onModalHide}>
+        <Modal isVisible={modalVisible} onBackdropPress={onBackdropPress}>
             <View style={styles.modalView}>
                 <Text style={styles.modalText}>
-                    {taken ? t("confirmNotTakingMedication") : t("confirmTakingMedication")}
+                    {attended ? t("confirmNotAttendingAppointment") : t("confirmAttendingAppointment")}
                 </Text>
                 <View style={styles.modalButtons}>
                     <TouchableOpacity
                         style={[styles.button, styles.buttonConfirm]}
-                        onPress={toggleMedicine}
+                        onPress={toggleAppointment}
                     >
                         <Text style={styles.textStyle}>{t("yes")}</Text>
                     </TouchableOpacity>
