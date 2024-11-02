@@ -3,5 +3,18 @@
   "Appointments": "Appointments",
   "ConsultDoctor": "Consult My Doctor",
   "Emergency": "Emergency",
-  "Settings": "Settings"
+  "Settings": "Settings",
+  "confirmTakingMedication": "Do you confirm that you took the medication?",
+  "confirmNotTakingMedication": "Do you confirm that you did not take the medication?",
+  "Take on empty stomach": "Take on empty stomach",
+  "Must take after with meal": "Must take after with meal",
+  "addMedicine": "Add Medicine",
+  "medicineName": "Medicine Name",
+  "description": "Description",
+  "dosage": "Dosage",
+  "whenToTake": "When to take (e.g. 10:00)",
+  "frequencyInDays": "Frequency in days (e.g. 3)",
+  "isEmptyStomach": "Take on empty stomach",
+  "add": "Add",
+  "cancel": "Cancel"
 }

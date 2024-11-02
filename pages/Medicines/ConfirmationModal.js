@@ -1,29 +1,30 @@
 import { StyleSheet, Text, View } from "react-native";
 import Modal from "../../components/Modal";
 import { TouchableOpacity } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const ConfirmationModal = ({ modalVisible, onBackdropPress, onModalHide, toggleMedicine, taken, setModalVisible }) => {
+    const {t} = useTranslation();
+
     return (
         <Modal isVisible={modalVisible} onBackdropPress={onBackdropPress} onModalHide={onModalHide}>
-            <View>
-                <View style={styles.modalView}>
-                    <Text style={styles.modalText}>
-                        {taken ? "İlacı almadığınızı onaylıyor musunuz?" : "İlacı aldığınızı onaylıyor musunuz?"}
-                    </Text>
-                    <View style={styles.modalButtons}>
-                        <TouchableOpacity
-                            style={[styles.button, styles.buttonConfirm]}
-                            onPress={toggleMedicine}
-                        >
-                            <Text style={styles.textStyle}>Evet</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.button, styles.buttonCancel]}
-                            onPress={() => setModalVisible(false)}
-                        >
-                            <Text style={styles.textStyle}>Hayır</Text>
-                        </TouchableOpacity>
-                    </View>
+            <View style={styles.modalView}>
+                <Text style={styles.modalText}>
+                    {taken ? t("confirmNotTakingMedication") : t("confirmTakingMedication")}
+                </Text>
+                <View style={styles.modalButtons}>
+                    <TouchableOpacity
+                        style={[styles.button, styles.buttonConfirm]}
+                        onPress={toggleMedicine}
+                    >
+                        <Text style={styles.textStyle}>Evet</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.button, styles.buttonCancel]}
+                        onPress={() => setModalVisible(false)}
+                    >
+                        <Text style={styles.textStyle}>Hayır</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </Modal>

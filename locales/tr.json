@@ -3,5 +3,18 @@
   "Appointments": "Randevular",
   "ConsultDoctor": "Doktoruma Danış",
   "Emergency": "Acil Durum",
-  "Settings": "Ayarlar"
+  "Settings": "Ayarlar",
+  "confirmTakingMedication": "İlacı aldığınızı onaylıyor musunuz?",
+  "confirmNotTakingMedication": "İlacı almadığınızı onaylıyor musunuz?",
+  "Take on empty stomach": "Aç karnına alın",
+  "Must take after with meal": "Yemekten sonra alınmalıdır",
+  "addMedicine": "İlaç Ekle",
+  "medicineName": "İlaç Adı",
+  "description": "Açıklama",
+  "dosage": "Doz",
+  "whenToTake": "Ne zaman alınmalı (örneğin 10:00)",
+  "frequencyInDays": "Kaç günde bir (örneğin 3)",
+  "isEmptyStomach": "Aç karnına alın",
+  "add": "Ekle",
+  "cancel": "İptal"
 }

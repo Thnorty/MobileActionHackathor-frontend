@@ -2,9 +2,15 @@ import {useState, useEffect} from "react";
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import ConfirmationModal from "./ConfirmationModal";
 import backend from "../../utils/Backend";
+import Icon from "react-native-vector-icons/FontAwesome";
+import AddMedicineModal from "./AddMedicineModal";
+import { useTranslation } from "react-i18next";
 
 const Index = () => {
+    const {t} = useTranslation();
+
 	const [medicines, setMedicines] = useState([]);
+    const [addModalVisible, setAddModalVisible] = useState(false);
 
     useEffect(() => {
         const payload = {
@@ -47,13 +53,34 @@ const Index = () => {
                         <Text style={styles.time}>{medicine.time}</Text>
                     </View>
                     <Text style={styles.description}>{medicine.description}</Text>
-                    <Text style={styles.dosage}>{medicine.dosage}</Text>
+                    <View style={styles.medicineInfo}>
+                        <Text style={styles.dosage}>{medicine.dosage}</Text>
+                        <View style={styles.stomachIndicator}>
+                            <Icon 
+                                name="cutlery" 
+                                size={16} 
+                                color="white" 
+                            />
+                            <Text style={styles.stomachText}>
+                                {medicine.emptyStomach ? t("Take on empty stomach") : t("Must take after with meal")}
+                            </Text>
+                        </View>
+                    </View>
                 </TouchableOpacity>
             ))}
+            <TouchableOpacity 
+                style={styles.fab}
+                onPress={() => setAddModalVisible(true)}
+            >
+                <Icon name="plus" size={24} color="white" />
+            </TouchableOpacity>
             <ConfirmationModal
                 modalVisible={modalVisible} setModalVisible={setModalVisible} onBackdropPress={() => setModalVisible(false)}
                 onModalHide={() => setSelectedIndex(null)} taken={medicines[selectedIndex]?.taken}
                 toggleMedicine={toggleMedicine}
+            />
+            <AddMedicineModal
+                modalVisible={addModalVisible} setModalVisible={setAddModalVisible} onBackdropPress={() => setAddModalVisible(false)}
             />
         </View>
 	);
@@ -91,6 +118,41 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#fff',
     },
+    fab: {
+        position: 'absolute',
+        right: 20,
+        bottom: 20,
+        backgroundColor: '#06bae3',
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+    },
+    medicineInfo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 8
+    },
+    stomachIndicator: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 12
+    },
+    stomachText: {
+        color: 'white',
+        marginLeft: 6,
+        fontSize: 12
+    }
 });
 
 export default Index;
