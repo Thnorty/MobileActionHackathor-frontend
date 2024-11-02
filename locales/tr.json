@@ -16,5 +16,8 @@
   "frequencyInDays": "Kaç günde bir (örneğin 3)",
   "isEmptyStomach": "Aç karnına alın",
   "add": "Ekle",
-  "cancel": "İptal"
+  "cancel": "İptal",
+  "cannotTakeYet": "Henüz alamazsınız!",
+  "pleaseWaitUntil": "Lütfen şu saate kadar bekleyin:",
+  "ok": "Tamam"
 }

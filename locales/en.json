@@ -16,5 +16,8 @@
   "frequencyInDays": "Frequency in days (e.g. 3)",
   "isEmptyStomach": "Take on empty stomach",
   "add": "Add",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "cannotTakeYet": "Cannot take yet!",
+  "pleaseWaitUntil": "Please wait until:",
+  "ok": "OK"
 }

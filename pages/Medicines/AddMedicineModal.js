@@ -5,7 +5,7 @@ import { useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import backend from "../../utils/Backend";
 
-const AddMedicineModal = ({ modalVisible, onBackdropPress, setModalVisible }) => {
+const AddMedicineModal = ({ modalVisible, onBackdropPress, setModalVisible, setMedicines }) => {
     const {t} = useTranslation();
 
     const [name, setName] = useState("");
@@ -27,7 +27,10 @@ const AddMedicineModal = ({ modalVisible, onBackdropPress, setModalVisible }) =>
         };
         backend.post("/medicines/add/", payload)
         .then((response) => {
-            console.log(response.data);
+            backend.post("/medicines/today/", {"senior_id": 1})
+            .then((response) => {
+                setMedicines(response.data.medicines);
+            });
         });
     }
 

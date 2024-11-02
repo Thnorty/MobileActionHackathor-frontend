@@ -1,16 +1,21 @@
 import {useState, useEffect} from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import ConfirmationModal from "./ConfirmationModal";
 import backend from "../../utils/Backend";
 import Icon from "react-native-vector-icons/FontAwesome";
 import AddMedicineModal from "./AddMedicineModal";
 import { useTranslation } from "react-i18next";
+import { FlashList } from "@shopify/flash-list";
+import TimeHasNotComeModal from "./TimeHasNotComeModal";
 
 const Index = () => {
     const {t} = useTranslation();
 
 	const [medicines, setMedicines] = useState([]);
     const [addModalVisible, setAddModalVisible] = useState(false);
+    const [confirmationModalVisible, setConfirmationModalVisible] = useState(false);
+    const [timeHasNotComeModalVisible, setTimeHasNotComeModalVisible] = useState(false);
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
     useEffect(() => {
         const payload = {
@@ -22,12 +27,18 @@ const Index = () => {
         })
     }, []);
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(null);
-
     const handlePress = (index) => {
+        const currentTime = new Date();
+        const medicineTime = new Date();
+        const [hours, minutes] = medicines[index].when_to_take.split(':');
+        medicineTime.setHours(parseInt(hours), parseInt(minutes), 0);
         setSelectedIndex(index);
-        setModalVisible(true);
+    
+        if (currentTime < medicineTime) {
+            setTimeHasNotComeModalVisible(true);
+            return;
+        }
+        setConfirmationModalVisible(true);
     };
 
     const toggleMedicine = () => {
@@ -35,7 +46,7 @@ const Index = () => {
             setMedicines(medicines.map((medicine, i) => 
                 i === selectedIndex ? {...medicine, taken: !medicine.taken} : medicine
             ));
-            setModalVisible(false);
+            setConfirmationModalVisible(false);
             const payload = {
                 "medicine_id": medicines[selectedIndex].id,
                 "taken": !medicines[selectedIndex].taken
@@ -46,28 +57,33 @@ const Index = () => {
 
 	return (
         <View style={styles.container}>
-            {medicines.map((medicine, index) => (
-                <TouchableOpacity key={index} style={[styles.item, {backgroundColor: medicine.taken ? "#3cc761" : "#d60000"}]} onPress={() => handlePress(index)}>
-                    <View style={styles.header}>
-                    	<Text style={styles.name}>{medicine.name}</Text>
-                        <Text style={styles.time}>{medicine.time}</Text>
-                    </View>
-                    <Text style={styles.description}>{medicine.description}</Text>
-                    <View style={styles.medicineInfo}>
-                        <Text style={styles.dosage}>{medicine.dosage}</Text>
-                        <View style={styles.stomachIndicator}>
-                            <Icon 
-                                name="cutlery" 
-                                size={16} 
-                                color="white" 
-                            />
-                            <Text style={styles.stomachText}>
-                                {medicine.emptyStomach ? t("Take on empty stomach") : t("Must take after with meal")}
-                            </Text>
+            <FlashList
+                contentContainerStyle={{paddingBottom: 80, paddingHorizontal: 10}}
+                data={medicines}
+                estimatedItemSize={120}
+                renderItem={({item, index}) => (
+                    <TouchableOpacity key={index} style={[styles.item, {backgroundColor: item.taken ? "#3cc761" : "#d60000"}]} onPress={() => handlePress(index)}>
+                        <View style={styles.header}>
+                            <Text style={styles.name}>{item.name}</Text>
+                            <Text style={styles.when_to_take}>{item.when_to_take}</Text>
                         </View>
-                    </View>
-                </TouchableOpacity>
-            ))}
+                        <Text style={styles.description}>{item.description}</Text>
+                        <View style={styles.medicineInfo}>
+                            <Text style={styles.dosage}>{item.dosage}</Text>
+                            <View style={styles.stomachIndicator}>
+                                <Icon 
+                                    name="cutlery" 
+                                    size={16} 
+                                    color="white"
+                                />
+                                <Text style={styles.stomachText}>
+                                    {item.emptyStomach ? t("Take on empty stomach") : t("Must take after with meal")}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />
             <TouchableOpacity 
                 style={styles.fab}
                 onPress={() => setAddModalVisible(true)}
@@ -75,12 +91,17 @@ const Index = () => {
                 <Icon name="plus" size={24} color="white" />
             </TouchableOpacity>
             <ConfirmationModal
-                modalVisible={modalVisible} setModalVisible={setModalVisible} onBackdropPress={() => setModalVisible(false)}
+                modalVisible={confirmationModalVisible} setModalVisible={setConfirmationModalVisible} onBackdropPress={() => setConfirmationModalVisible(false)}
                 onModalHide={() => setSelectedIndex(null)} taken={medicines[selectedIndex]?.taken}
                 toggleMedicine={toggleMedicine}
             />
             <AddMedicineModal
                 modalVisible={addModalVisible} setModalVisible={setAddModalVisible} onBackdropPress={() => setAddModalVisible(false)}
+                setMedicines={setMedicines}
+            />
+            <TimeHasNotComeModal
+                modalVisible={timeHasNotComeModalVisible} setModalVisible={setTimeHasNotComeModalVisible} onBackdropPress={() => setTimeHasNotComeModalVisible(false)}
+                medicineTime={medicines[selectedIndex]?.when_to_take}
             />
         </View>
 	);
@@ -89,7 +110,6 @@ const Index = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
     },
     item: {
         padding: 10,
@@ -105,7 +125,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
-    time: {
+    when_to_take: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#fff',
