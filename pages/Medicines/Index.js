@@ -77,7 +77,7 @@ const Index = () => {
                                     color="white"
                                 />
                                 <Text style={styles.stomachText}>
-                                    {item.emptyStomach ? t("Take on empty stomach") : t("Must take after with meal")}
+                                    {item.is_empty_stomach ? t("Take on empty stomach") : t("Must take after with meal")}
                                 </Text>
                             </View>
                         </View>

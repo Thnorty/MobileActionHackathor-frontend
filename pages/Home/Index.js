@@ -1,14 +1,16 @@
-import {Text, TouchableOpacity, StyleSheet, Linking, View} from "react-native";
+import {Text, TouchableOpacity, StyleSheet, Linking, View, ScrollView} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useTranslation} from "react-i18next";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import backend from "../../utils/Backend";
-import { ScrollView } from "react-native";
+import FreeFallDetector from "../../utils/FreeFallDetector";
 
 const Index = () => {
 	const {t} = useTranslation();
+
 	const navigation = useNavigation();
+	const firstFallTriggerRef = useRef(true);
 	const [currentTime, setCurrentTime] = useState(
 		new Date()
 			.toLocaleTimeString('en-US', {
@@ -21,6 +23,7 @@ const Index = () => {
 	);
 	const [doctorPhone, setDoctorPhone] = useState("");
 	const [emergencyPhone, setEmergencyPhone] = useState("");
+	const emergencyPhoneRef = useRef("");
 
 	useEffect(() => {
 		const payload = {
@@ -29,6 +32,7 @@ const Index = () => {
 		backend.post("/api/emergency_phone/", payload)
 		.then((response) => {
 			setEmergencyPhone(response.data.phone);
+			emergencyPhoneRef.current = response.data.phone;
 		});
 		backend.post("/api/doctor_phone/", payload)
 		.then((response) => {
@@ -56,6 +60,23 @@ const Index = () => {
 	const handleEmergencyCall = () => {
 		Linking.openURL("tel:" + emergencyPhone);
 	}
+
+	useEffect(() => {
+		const detector = new FreeFallDetector();
+		detector.setFreeFallDetectedCallback(() => {
+			if (firstFallTriggerRef.current) {
+				firstFallTriggerRef.current = false;
+				return;
+			}
+			// alert('The phone is falling!');
+			Linking.openURL("tel:" + emergencyPhoneRef.current);
+		});
+		detector.start();
+
+		return () => {
+			detector.stop();
+		};
+	}, []);
 
 	return (
 		<ScrollView style={styles.container}>
@@ -85,6 +106,10 @@ const Index = () => {
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#e30606"}]} onPress={handleEmergencyCall}>
 				<Icon name="phone" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Emergency")}</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={[styles.button, {backgroundColor: "#f0ad4e"}]} onPress={() => navigation.navigate("Chat")}>
+				<Icon name="file-text" size={30} color="white" />
+				<Text style={styles.buttonText}>{t("Chat")}</Text>
 			</TouchableOpacity>
 		</ScrollView>
 	);

@@ -4,6 +4,8 @@
   "ConsultDoctor": "Doktoruma Danış",
   "Emergency": "Acil Durum",
   "Settings": "Ayarlar",
+  "Summary": "Özet",
+  "Chat": "Sohbet",
   "confirmTakingMedication": "İlacı aldığınızı onaylıyor musunuz?",
   "confirmNotTakingMedication": "İlacı almadığınızı onaylıyor musunuz?",
   "Take on empty stomach": "Aç karnına alın",
@@ -30,5 +32,8 @@
   "yes": "Evet",
   "no": "Hayır",
   "confirmNotAttendingAppointment": "Randevuya katılmadığınızı onaylıyor musunuz?",
-  "confirmAttendingAppointment": "Randevuya katıldığınızı onaylıyor musunuz?"
+  "confirmAttendingAppointment": "Randevuya katıldığınızı onaylıyor musunuz?",
+  "monthlySummary": "Aylık Özet",
+  "dataLoadError": "Veriler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+  "typeAMessage": "Bir mesaj yazın..."
 }

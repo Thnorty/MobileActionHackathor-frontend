@@ -4,6 +4,8 @@
   "ConsultDoctor": "Consult My Doctor",
   "Emergency": "Emergency",
   "Settings": "Settings",
+  "Summary": "Summary",
+  "Chat": "Chat",
   "confirmTakingMedication": "Do you confirm that you took the medication?",
   "confirmNotTakingMedication": "Do you confirm that you did not take the medication?",
   "Take on empty stomach": "Take on empty stomach",
@@ -30,5 +32,8 @@
   "yes": "Yes",
   "no": "No",
   "confirmNotAttendingAppointment": "Do you confirm that you did not attend the appointment?",
-  "confirmAttendingAppointment": "Do you confirm that you attended the appointment?"
+  "confirmAttendingAppointment": "Do you confirm that you attended the appointment?",
+  "monthlySummary": "Monthly Summary",
+  "dataLoadError": "An error occurred while loading the data. Please try again later.",
+  "typeAMessage": "Type a message..."
 }

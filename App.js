@@ -4,6 +4,7 @@ import MedicinesIndex from "./pages/Medicines/Index";
 import AppointmentsIndex from "./pages/Appointments/Index";
 import IntroIndex from "./pages/Intro/Index";
 import SettingsIndex from "./pages/Settings/Index";
+import ChatIndex from "./pages/Chat/Index";
 import RegisterIndex from "./pages/Register/Index";
 import ProfileIndex from "./pages/Profile/Index";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
@@ -25,6 +26,7 @@ export default function App() {
             <Stack.Screen name={"Home"} component={HomeIndex} options={{headerShown: false, title: t("Home")}} />
             <Stack.Screen name={"Medicines"} component={MedicinesIndex} options={{title: t("Medicines")}} />
             <Stack.Screen name={"Appointments"} component={AppointmentsIndex} options={{title: t("Appointments")}} />
+            <Stack.Screen name={"Chat"} component={ChatIndex} options={{title: t("Chat")}} />
             <Stack.Screen name={"Settings"} component={SettingsIndex} options={{title: t("Settings")}} />
             <Stack.Screen name={"Profile"} component={ProfileIndex} options={{title: t("Profile")}} />
           </Stack.Navigator>
