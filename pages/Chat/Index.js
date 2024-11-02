@@ -9,17 +9,19 @@ import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native";
 import { TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as Speech from 'expo-speech';
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const Index = () => {
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
+    const [speaking, setSpeaking] = useState(false);
     const chatRef = useRef(null);
     const scrollViewRef = useRef();
 
@@ -46,7 +48,7 @@ const Index = () => {
             
             const prompt = `You are talking to an elderly person.
                 Current date is ${currentDate} and time is ${currentTime}. Just use plain text.
-                Talk friendly. Talk Turkish. Give a detailed asummary of what they did and what they should do this month.
+                Talk friendly. Talk ${i18n.language}. Give a detailed asummary of what they did and what they should do this month.
                 The monthly summary of the elderly person's health and activities is as follows: ${data}`;
 
             chatRef.current = model.startChat({
@@ -88,6 +90,16 @@ const Index = () => {
         }
     };
 
+    const speak = (text) => {
+        if (speaking) {
+            Speech.stop();
+            setSpeaking(false);
+        } else {
+            setSpeaking(true);
+            Speech.speak(text, { onDone: () => setSpeaking(false), language: i18n.language  });
+        }
+    }
+
     return (
         <KeyboardAvoidingView
             behavior={"padding"}
@@ -106,7 +118,11 @@ const Index = () => {
                                 message.sender === "user" ? { alignSelf: 'flex-end' } : { alignSelf: 'flex-start' }
                             ]}
                             onPress={() => speak(message.text)}>
+                        {speaking ?
+                            <ActivityIndicator size="small" color="#0000ff" />
+                        :
                             <Icon name="volume-up" size={24} />
+                        }
                         </TouchableOpacity>
                         <View
                             style={[
@@ -140,7 +156,7 @@ const Index = () => {
                     ]}
                     value={inputMessage}
                     onChangeText={setInputMessage}
-                    placeholder={t("Type a message...")}
+                    placeholder={t("typeAMessage")}
                     multiline
                     editable={!loading}
                 />

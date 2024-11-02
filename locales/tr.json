@@ -34,5 +34,6 @@
   "confirmNotAttendingAppointment": "Randevuya katılmadığınızı onaylıyor musunuz?",
   "confirmAttendingAppointment": "Randevuya katıldığınızı onaylıyor musunuz?",
   "monthlySummary": "Aylık Özet",
-  "dataLoadError": "Veriler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+  "dataLoadError": "Veriler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+  "typeAMessage": "Bir mesaj yazın..."
 }
