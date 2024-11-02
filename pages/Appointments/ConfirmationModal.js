@@ -6,9 +6,6 @@ import { useTranslation } from "react-i18next";
 const ConfirmationModal = ({ modalVisible, onBackdropPress, toggleAppointment, attended, setModalVisible }) => {
     const {t} = useTranslation();
 
-    console.log(attended);
-    
-
     return (
         <Modal isVisible={modalVisible} onBackdropPress={onBackdropPress}>
             <View style={styles.modalView}>
