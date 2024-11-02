@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity, StyleSheet, Linking} from "react-native";
+import {Text, TouchableOpacity, StyleSheet, Linking, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useTranslation} from "react-i18next";
@@ -59,10 +59,17 @@ const Index = () => {
 
 	return (
 		<ScrollView style={styles.container}>
-			<TouchableOpacity style={[styles.settingsButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Settings")}>
-				<Icon name="cog" size={24} color="white" />
-			</TouchableOpacity>
+			<View style={styles.topContainer}>
 			<Text style={styles.timeText}>{currentTime}</Text>
+			<View style={styles.contentContainer}>
+				<TouchableOpacity style={[styles.settingsButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Settings")}>
+					<Icon name="cog" size={24} color="white" />
+				</TouchableOpacity>
+				<TouchableOpacity style={[styles.profileButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Profile")}>
+					<Icon name="user" size={24} color="white" />
+				</TouchableOpacity>
+			</View>
+			</View>
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#06bae3"}]} onPress={() => navigation.navigate("Medicines")}>
 				<Icon name="medkit" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Medicines")}</Text>
@@ -84,13 +91,15 @@ const Index = () => {
 };
 
 const styles = StyleSheet.create({
+	topContainer: {
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+	},
 	container: {
 		flex: 1,
 	},
     contentContainer: {
-		flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+
     },
 	button: {
 		margin: 16,
@@ -105,25 +114,32 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	timeText: {
-		textAlign: "center",
 		fontSize: 40,
 		marginVertical: 30,
 		fontSize: 50,
 		color: "black",	
 		marginBottom:30,
 		fontFamily:"monospace",
+		marginLeft: 20,
+		fontWeight: "bold",
 	},
     settingsButton: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
         width: 45,
         height: 45,
         borderRadius: 23,
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 3,
-        zIndex: 1,
+		marginTop: 30,
+	},
+	profileButton: {
+		width: 45,
+		height: 45,
+		borderRadius: 23,
+		justifyContent: 'center',
+		alignItems: 'center',
+		elevation: 3,
+		marginTop:10,
 	},
 });
 
