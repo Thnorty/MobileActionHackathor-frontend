@@ -93,15 +93,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 	button: {
-		margin: 10,
+		margin: 16,
 		borderRadius: 10,
-		height: 100,
+		height: 150,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	buttonText: {
 		color: "white",
-		fontSize: 18,
+		fontSize: 26,
 		marginTop: 10,
 	},
 	timeText: {
