@@ -117,6 +117,9 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		fontSize: 40,
 		marginVertical: 30,
+		fontSize: 50,
+		color: "black",	
+		marginBottom:30,
 		fontFamily:"monospace",
 	},
     settingsButton: {

@@ -2,6 +2,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import HomeIndex from "./pages/Home/Index";
 import MedicinesIndex from "./pages/Medicines/Index";
 import AppointmentsIndex from "./pages/Appointments/Index";
+import IntroIndex from "./pages/Intro/Index";
 import SettingsIndex from "./pages/Settings/Index";
 import SummaryIndex from "./pages/Summary/Index";
 import ChatIndex from "./pages/Chat/Index";
@@ -18,7 +19,8 @@ export default function App() {
     <SafeAreaView style={{flex: 1}}>
       <I18nextProvider i18n={i18n}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName={"Home"} screenOptions={{ tabBarStyle: {display: "none"}}}>
+        <Stack.Navigator initialRouteName={"IntroPage"} screenOptions={{ tabBarStyle: {display: "none"}}}>
+          <Stack.Screen name={"IntroPage"} component={IntroIndex} options={{headerShown: false}} />
             <Stack.Screen name={"Home"} component={HomeIndex} options={{headerShown: false, title: t("Home")}} />
             <Stack.Screen name={"Medicines"} component={MedicinesIndex} options={{title: t("Medicines")}} />
             <Stack.Screen name={"Appointments"} component={AppointmentsIndex} options={{title: t("Appointments")}} />
