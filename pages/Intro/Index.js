@@ -6,9 +6,11 @@ import brand from '../../assets/yeni-yanındayim.png';
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import { useUser } from "../../utils/UserContext";
 
 const Index = () => {
     const navigation = useNavigation();
+    const {userRole, setUserRole} = useUser();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigateToHome = () => {
@@ -22,8 +24,11 @@ const Index = () => {
 
     const handleLogin = () => {
         // Add your login logic here
-        console.log('Username:', username);
-        console.log('Password:', password);
+        if (username === "Mehmet") {
+            setUserRole("caregiver");
+        } else {
+            setUserRole("senior");
+        }
         navigateToHome();
     };
 

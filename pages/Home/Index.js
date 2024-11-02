@@ -5,9 +5,11 @@ import {useTranslation} from "react-i18next";
 import {useState, useEffect, useRef} from "react";
 import backend from "../../utils/Backend";
 import FreeFallDetector from "../../utils/FreeFallDetector";
+import { useUser } from "../../utils/UserContext";
 
 const Index = () => {
 	const {t} = useTranslation();
+	const {userRole, setUserRole} = useUser();
 
 	const navigation = useNavigation();
 	const firstFallTriggerRef = useRef(true);
@@ -81,15 +83,15 @@ const Index = () => {
 	return (
 		<ScrollView style={styles.container}>
 			<View style={styles.topContainer}>
-			<Text style={styles.timeText}>{currentTime}</Text>
-			<View style={styles.contentContainer}>
-				<TouchableOpacity style={[styles.settingsButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Settings")}>
-					<Icon name="cog" size={24} color="white" />
-				</TouchableOpacity>
-				<TouchableOpacity style={[styles.profileButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Profile")}>
-					<Icon name="user" size={24} color="white" />
-				</TouchableOpacity>
-			</View>
+				<Text style={styles.timeText}>{currentTime}</Text>
+				<View style={styles.contentContainer}>
+					<TouchableOpacity style={[styles.settingsButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Settings")}>
+						<Icon name="cog" size={24} color="white" />
+					</TouchableOpacity>
+					<TouchableOpacity style={[styles.profileButton, {backgroundColor: "#919191"}]} onPress={() => navigation.navigate("Profile")}>
+						<Icon name="user" size={24} color="white" />
+					</TouchableOpacity>
+				</View>
 			</View>
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#06bae3"}]} onPress={() => navigation.navigate("Medicines")}>
 				<Icon name="medkit" size={30} color="white" />
@@ -99,17 +101,21 @@ const Index = () => {
 				<Icon name="calendar" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Appointments")}</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={[styles.button, {backgroundColor: "#a134eb"}]} onPress={handleCallDoctor}>
-				<Icon name="phone" size={30} color="white" />
-				<Text style={styles.buttonText}>{t("ConsultDoctor")}</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={[styles.button, {backgroundColor: "#e30606"}]} onPress={handleEmergencyCall}>
-				<Icon name="phone" size={30} color="white" />
-				<Text style={styles.buttonText}>{t("Emergency")}</Text>
-			</TouchableOpacity>
+			{userRole !== "caregiver" &&
+				<TouchableOpacity style={[styles.button, {backgroundColor: "#a134eb"}]} onPress={handleCallDoctor}>
+					<Icon name="phone" size={30} color="white" />
+					<Text style={styles.buttonText}>{t("ConsultDoctor")}</Text>
+				</TouchableOpacity>
+			}
+			{userRole !== "caregiver" &&
+				<TouchableOpacity style={[styles.button, {backgroundColor: "#e30606"}]} onPress={handleEmergencyCall}>
+					<Icon name="phone" size={30} color="white" />
+					<Text style={styles.buttonText}>{t("Emergency")}</Text>
+				</TouchableOpacity>
+			}
 			<TouchableOpacity style={[styles.button, {backgroundColor: "#f0ad4e"}]} onPress={() => navigation.navigate("Chat")}>
 				<Icon name="file-text" size={30} color="white" />
-				<Text style={styles.buttonText}>{t("Chat")}</Text>
+				<Text style={styles.buttonText}>{userRole === "caregiver" ? t("statusReport") : t("Chat")}</Text>
 			</TouchableOpacity>
 		</ScrollView>
 	);

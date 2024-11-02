@@ -35,5 +35,6 @@
   "confirmAttendingAppointment": "Do you confirm that you attended the appointment?",
   "monthlySummary": "Monthly Summary",
   "dataLoadError": "An error occurred while loading the data. Please try again later.",
-  "typeAMessage": "Type a message..."
+  "typeAMessage": "Type a message...",
+  "statusReport": "Status Report"
 }

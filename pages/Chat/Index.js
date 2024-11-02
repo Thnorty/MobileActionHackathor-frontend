@@ -10,12 +10,14 @@ import { ScrollView } from "react-native";
 import { TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Speech from 'expo-speech';
+import { useUser } from "../../utils/UserContext";
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const Index = () => {
     const {t, i18n} = useTranslation();
+    const {userRole, setUserRole} = useUser();
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -46,16 +48,21 @@ const Index = () => {
             const response = await backend.post("/api/general_info/", { senior_id: 1 });
             const data = JSON.stringify(response.data);
             
-            const prompt = `You are talking to an elderly person.
+            const seniorPrompt = `You are talking to an elderly person.
                 Current date is ${currentDate} and time is ${currentTime}. Just use plain text.
                 Talk friendly. Talk ${i18n.language}. Give a detailed asummary of what they did and what they should do this month.
                 The monthly summary of the elderly person's health and activities is as follows: ${data}`;
+            
+            const caregiverPrompt = `You are talking to a caregiver.
+                Current date is ${currentDate} and time is ${currentTime}. Just use plain text.
+                Give a status report on the elderly person.
+                Talk ${i18n.language}. The monthly summary of the elderly person's health and activities is as follows: ${data}`;
 
             chatRef.current = model.startChat({
                 history: [],
             });
             
-            let result = await chatRef.current.sendMessage(prompt);
+            let result = await chatRef.current.sendMessage(userRole === "caregiver" ? caregiverPrompt : seniorPrompt);
             let messages = [{ text: result.response.text(), sender: "model", id: Date.now().toString() }];
             setMessages(messages);
         } catch (err) {
