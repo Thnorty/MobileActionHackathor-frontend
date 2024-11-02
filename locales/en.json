@@ -4,6 +4,8 @@
   "ConsultDoctor": "Consult My Doctor",
   "Emergency": "Emergency",
   "Settings": "Settings",
+  "Summary": "Summary",
+  "Chat": "Chat",
   "confirmTakingMedication": "Do you confirm that you took the medication?",
   "confirmNotTakingMedication": "Do you confirm that you did not take the medication?",
   "Take on empty stomach": "Take on empty stomach",

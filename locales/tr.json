@@ -4,6 +4,8 @@
   "ConsultDoctor": "Doktoruma Danış",
   "Emergency": "Acil Durum",
   "Settings": "Ayarlar",
+  "Summary": "Özet",
+  "Chat": "Sohbet",
   "confirmTakingMedication": "İlacı aldığınızı onaylıyor musunuz?",
   "confirmNotTakingMedication": "İlacı almadığınızı onaylıyor musunuz?",
   "Take on empty stomach": "Aç karnına alın",

@@ -1,10 +1,9 @@
-import {Text, TouchableOpacity, StyleSheet, Linking} from "react-native";
+import {Text, TouchableOpacity, StyleSheet, Linking, View, ScrollView} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {useTranslation} from "react-i18next";
 import {useState, useEffect} from "react";
 import backend from "../../utils/Backend";
-import { ScrollView } from "react-native";
 
 const Index = () => {
 	const {t} = useTranslation();
@@ -79,6 +78,16 @@ const Index = () => {
 				<Icon name="phone" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Emergency")}</Text>
 			</TouchableOpacity>
+			<View style={styles.row}>
+				<TouchableOpacity style={[styles.halfButton, {backgroundColor: "#f0ad4e"}]} onPress={() => navigation.navigate("Summary")}>
+					<Icon name="file-text" size={30} color="white" />
+					<Text style={styles.buttonText}>{t("Summary")}</Text>
+				</TouchableOpacity>
+				<TouchableOpacity style={[styles.halfButton, {backgroundColor: "#5bc0de"}]} onPress={() => navigation.navigate("Chat")}>
+					<Icon name="comments" size={30} color="white" />
+					<Text style={styles.buttonText}>{t("Chat")}</Text>
+				</TouchableOpacity>
+			</View>
 		</ScrollView>
 	);
 };
@@ -122,6 +131,18 @@ const styles = StyleSheet.create({
         elevation: 3,
         zIndex: 1,
     },
+	row: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
+	halfButton: {
+		margin: 16,
+		borderRadius: 10,
+		height: 150,
+		width: "40%",
+		justifyContent: "center",
+		alignItems: "center",
+	},
 });
 
 export default Index;
