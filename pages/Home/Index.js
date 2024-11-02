@@ -78,16 +78,10 @@ const Index = () => {
 				<Icon name="phone" size={30} color="white" />
 				<Text style={styles.buttonText}>{t("Emergency")}</Text>
 			</TouchableOpacity>
-			<View style={styles.row}>
-				<TouchableOpacity style={[styles.halfButton, {backgroundColor: "#f0ad4e"}]} onPress={() => navigation.navigate("Summary")}>
-					<Icon name="file-text" size={30} color="white" />
-					<Text style={styles.buttonText}>{t("Summary")}</Text>
-				</TouchableOpacity>
-				<TouchableOpacity style={[styles.halfButton, {backgroundColor: "#5bc0de"}]} onPress={() => navigation.navigate("Chat")}>
-					<Icon name="comments" size={30} color="white" />
-					<Text style={styles.buttonText}>{t("Chat")}</Text>
-				</TouchableOpacity>
-			</View>
+			<TouchableOpacity style={[styles.button, {backgroundColor: "#f0ad4e"}]} onPress={() => navigation.navigate("Chat")}>
+				<Icon name="file-text" size={30} color="white" />
+				<Text style={styles.buttonText}>{t("Chat")}</Text>
+			</TouchableOpacity>
 		</ScrollView>
 	);
 };
@@ -115,7 +109,6 @@ const styles = StyleSheet.create({
 	},
 	timeText: {
 		textAlign: "center",
-		fontSize: 40,
 		marginVertical: 30,
 		fontSize: 50,
 		color: "black",	

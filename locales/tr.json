@@ -32,5 +32,7 @@
   "yes": "Evet",
   "no": "Hayır",
   "confirmNotAttendingAppointment": "Randevuya katılmadığınızı onaylıyor musunuz?",
-  "confirmAttendingAppointment": "Randevuya katıldığınızı onaylıyor musunuz?"
+  "confirmAttendingAppointment": "Randevuya katıldığınızı onaylıyor musunuz?",
+  "monthlySummary": "Aylık Özet",
+  "dataLoadError": "Veriler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin."
 }

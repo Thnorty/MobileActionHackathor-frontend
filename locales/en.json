@@ -32,5 +32,7 @@
   "yes": "Yes",
   "no": "No",
   "confirmNotAttendingAppointment": "Do you confirm that you did not attend the appointment?",
-  "confirmAttendingAppointment": "Do you confirm that you attended the appointment?"
+  "confirmAttendingAppointment": "Do you confirm that you attended the appointment?",
+  "monthlySummary": "Monthly Summary",
+  "dataLoadError": "An error occurred while loading the data. Please try again later."
 }
