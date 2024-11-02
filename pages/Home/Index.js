@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	timeText: {
-		fontSize: 40,
+		fontSize: 50,
 		color: "black",	
 		marginBottom:30,
 		fontFamily:"monospace",
-
+		opacity:0.7,
 	},
 });
 
