@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native";
 import { TextInput } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -53,7 +54,7 @@ const Index = () => {
             });
             
             let result = await chatRef.current.sendMessage(prompt);
-            let messages = [{ text: result.response.text(), sender: "model" }];
+            let messages = [{ text: result.response.text(), sender: "model", id: Date.now().toString() }];
             setMessages(messages);
         } catch (err) {
             setError(t('dataLoadError'));
@@ -78,14 +79,14 @@ const Index = () => {
             setMessages((prevMessages) => [...prevMessages, { 
                 text: response.response.text(), 
                 sender: "model",
-                id: (Date.now() + 1).toString()
+                id: Date.now().toString()
             }]);
         } catch (error) {
             setError(error.message);
         } finally {
             setLoading(false);
         }
-    }
+    };
 
     return (
         <KeyboardAvoidingView
@@ -96,21 +97,30 @@ const Index = () => {
                 style={styles.messageList}
                 ref={scrollViewRef}
                 onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
+                contentContainerStyle={{ paddingBottom: 20 }}
             >
                 {messages.map((message) => (
-                    <View 
-                        key={message.id}
-                        style={[
-                            styles.messageBubble,
-                            message.sender === "user" ? styles.userBubble : styles.modelBubble
-                        ]}
-                    >
-                        <Text style={[
-                            styles.messageText,
-                            message.sender === "user" ? styles.userText : styles.modelText
-                        ]}>
-                            {message.text}
-                        </Text>
+                    <View key={message.id}>
+                        <TouchableOpacity style={[
+                                styles.speakerButton,
+                                message.sender === "user" ? { alignSelf: 'flex-end' } : { alignSelf: 'flex-start' }
+                            ]}
+                            onPress={() => speak(message.text)}>
+                            <Icon name="volume-up" size={24} />
+                        </TouchableOpacity>
+                        <View
+                            style={[
+                                styles.messageBubble,
+                                message.sender === "user" ? styles.userBubble : styles.modelBubble
+                            ]}
+                        >
+                            <Text style={[
+                                styles.messageText,
+                                message.sender === "user" ? styles.userText : styles.modelText
+                            ]}>
+                                {message.text}
+                            </Text>
+                        </View>
                     </View>
                 ))}
                 {loading && <ActivityIndicator style={styles.loader} color="#0066cc" />}
@@ -145,7 +155,7 @@ const Index = () => {
                     }}
                     disabled={loading}
                 >
-                    <Text style={styles.sendButtonText}>→</Text>
+                    <Icon name="send" size={20} style={styles.sendButtonText} />
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -156,6 +166,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
+    },
+    speakerButton: {
+        justifyContent: 'center',
+        marginBottom: 10,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: '#e5e5e5',
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        margin: 10
     },
     messageList: {
         flex: 1,
