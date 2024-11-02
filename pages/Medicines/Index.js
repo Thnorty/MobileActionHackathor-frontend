@@ -84,7 +84,7 @@ const Index = () => {
                     </TouchableOpacity>
                 )}
             />
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={styles.fab}
                 onPress={() => setAddModalVisible(true)}
             >

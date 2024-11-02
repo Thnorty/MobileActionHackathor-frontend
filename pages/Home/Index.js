@@ -9,7 +9,16 @@ import { ScrollView } from "react-native";
 const Index = () => {
 	const {t} = useTranslation();
 	const navigation = useNavigation();
-	const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+	const [currentTime, setCurrentTime] = useState(
+		new Date()
+			.toLocaleTimeString('en-US', {
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: false
+			}
+		)
+	);
 	const [doctorPhone, setDoctorPhone] = useState("");
 	const [emergencyPhone, setEmergencyPhone] = useState("");
 
@@ -26,7 +35,16 @@ const Index = () => {
 			setDoctorPhone(response.data.phone);
 		});
 		const timer = setInterval(() => {
-			setCurrentTime(new Date().toLocaleTimeString());
+			setCurrentTime(
+				new Date()
+					.toLocaleTimeString('en-US', {
+						hour: '2-digit',
+						minute: '2-digit',
+						second: '2-digit',
+						hour12: false
+					}
+				)
+			);
 		}, 1000);
 		return () => clearInterval(timer);
 	}, []);

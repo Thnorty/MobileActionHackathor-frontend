@@ -19,5 +19,16 @@
   "cancel": "İptal",
   "cannotTakeYet": "Henüz alamazsınız!",
   "pleaseWaitUntil": "Lütfen şu saate kadar bekleyin:",
-  "ok": "Tamam"
+  "ok": "Tamam",
+  "attended": "Katıldı",
+  "notAttended": "Katılmadı",
+  "hasNotHappenedYet": "Henüz gerçekleşmedi",
+  "addAppointment": "Randevu Ekle",
+  "title": "Başlık",
+  "place": "Konum",
+  "when": "Ne zaman (örneğin 10:00)",
+  "yes": "Evet",
+  "no": "Hayır",
+  "confirmNotAttendingAppointment": "Randevuya katılmadığınızı onaylıyor musunuz?",
+  "confirmAttendingAppointment": "Randevuya katıldığınızı onaylıyor musunuz?"
 }

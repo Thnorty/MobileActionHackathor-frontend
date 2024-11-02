@@ -19,5 +19,16 @@
   "cancel": "Cancel",
   "cannotTakeYet": "Cannot take yet!",
   "pleaseWaitUntil": "Please wait until:",
-  "ok": "OK"
+  "ok": "OK",
+  "attended": "Attended",
+  "notAttended": "Not Attended",
+  "hasNotHappenedYet": "Hasn't happened yet",
+  "addAppointment": "Add Appointment",
+  "title": "Title",
+  "place": "Place",
+  "when": "When (e.g. 10:00)",
+  "yes": "Yes",
+  "no": "No",
+  "confirmNotAttendingAppointment": "Do you confirm that you did not attend the appointment?",
+  "confirmAttendingAppointment": "Do you confirm that you attended the appointment?"
 }
